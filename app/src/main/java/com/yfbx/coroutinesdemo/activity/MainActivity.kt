@@ -1,7 +1,7 @@
 package com.yfbx.coroutinesdemo.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.yfbx.coroutinesdemo.R
 import com.yfbx.coroutinesdemo.net.Net
 import com.yfbx.coroutinesdemo.net.api.LoginApi

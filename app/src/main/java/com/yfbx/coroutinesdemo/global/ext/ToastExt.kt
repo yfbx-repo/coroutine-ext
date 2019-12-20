@@ -1,12 +1,12 @@
 package com.yfbx.coroutinesdemo.global.ext
 
 import android.graphics.Color
-import android.support.annotation.ColorRes
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import com.yfbx.coroutinesdemo.R
 import com.yfbx.coroutinesdemo.global.App
 

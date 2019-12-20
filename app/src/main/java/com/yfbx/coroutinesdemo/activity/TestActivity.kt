@@ -1,7 +1,7 @@
 package com.yfbx.coroutinesdemo.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 
 /**
