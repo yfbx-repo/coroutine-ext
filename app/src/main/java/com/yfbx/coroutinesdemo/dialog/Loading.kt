@@ -1,11 +1,11 @@
 package com.yfbx.coroutinesdemo.dialog
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
 import com.yfbx.coroutinesdemo.R
-import com.yfbx.coroutinesdemo.global.App
 import kotlinx.android.synthetic.main.dialog_loading.*
 
 /**
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.dialog_loading.*
  * Date: 2019-07-20
  * Description:
  */
-class Loading : BaseDialog(App.stackTop()) {
+class Loading(context: Context) : BaseDialog(context) {
 
 
     override fun getLayout(): Int {
