@@ -1,4 +1,4 @@
-package com.yfbx.coroutinesdemo.net.api
+package com.yfbx.coroutinesdemo.api
 
 import com.yfbx.coroutinesdemo.bean.User
 import retrofit2.http.Field

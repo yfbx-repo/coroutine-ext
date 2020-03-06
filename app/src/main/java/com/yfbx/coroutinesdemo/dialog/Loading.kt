@@ -1,7 +1,7 @@
 package com.yfbx.coroutinesdemo.dialog
 
 import android.animation.ObjectAnimator
-import android.content.Context
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -13,7 +13,15 @@ import kotlinx.android.synthetic.main.dialog_loading.*
  * Date: 2019-07-20
  * Description:
  */
-class Loading(context: Context) : BaseDialog(context) {
+class Loading(context: Activity) : BaseDialog(context) {
+
+    companion object {
+        fun show(context: Activity): Loading {
+            val loading = Loading(context)
+            loading.show()
+            return loading
+        }
+    }
 
 
     override fun getLayout(): Int {

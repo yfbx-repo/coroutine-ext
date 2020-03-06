@@ -1,15 +1,18 @@
 package com.yfbx.coroutinesdemo.net
 
+import android.app.Activity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.google.gson.stream.MalformedJsonException
-import com.yfbx.coroutinesdemo.global.ext.showError
+import com.yfbx.coroutinesdemo.dialog.Loading
 import com.yfbx.coroutinesdemo.net.helper.CookiesKeeper
 import com.yfbx.coroutinesdemo.net.helper.EmptyConverterFactory
 import com.yfbx.coroutinesdemo.net.helper.NetInterceptor
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.launch
+import com.yfbx.coroutinesdemo.utils.toast
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -23,8 +26,6 @@ import java.net.UnknownHostException
  * Date 2019/5/24 0024
  * Description:
  */
-
-
 private const val HOST = "http://www-dev.yuxiaor.com/api/v1/"
 
 private val client = OkHttpClient.Builder()
@@ -32,24 +33,52 @@ private val client = OkHttpClient.Builder()
         .addInterceptor(NetInterceptor())
         .build()
 
-val net: Retrofit = Retrofit.Builder()
+val Net: Retrofit = Retrofit.Builder()
         .baseUrl(HOST)
         .client(client)
         .addConverterFactory(EmptyConverterFactory())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+fun LifecycleOwner.network(block: suspend CoroutineScope.() -> Unit): Job {
+    return lifecycleScope.launch(ErrorHandler(), CoroutineStart.DEFAULT, block)
+}
 
-fun CoroutineScope.network(onError: ((code: Int, msg: String) -> Unit)? = null, block: suspend CoroutineScope.() -> Unit) {
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        val error = handleError(throwable)
-        if (onError != null) {
+fun LifecycleOwner.loading(context: Activity?, block: suspend CoroutineScope.() -> Unit): Job {
+    val loading = if (context != null) Loading.show(context) else null
+    val job = network(block)
+    job.invokeOnCompletion {
+        loading?.dismiss()
+    }
+    return job
+}
+
+fun FragmentActivity.loading(show: Boolean = true, block: suspend CoroutineScope.() -> Unit): Job {
+    val context = if (show) this else null
+    return loading(context, block)
+}
+
+fun Fragment.loading(show: Boolean = true, block: suspend CoroutineScope.() -> Unit): Job {
+    val context = if (show) activity else null
+    return loading(context, block)
+}
+
+fun Job.onError(onError: (code: Int, msg: String) -> Unit): Job {
+    invokeOnCompletion {
+        if (it != null) {
+            val error = handleError(it)
             onError.invoke(error.first, error.second)
-        } else {
-            showError(error.second)
         }
     }
-    launch(exceptionHandler, CoroutineStart.DEFAULT, block)
+    return this
+}
+
+@Suppress("FunctionName")
+fun ErrorHandler(): CoroutineExceptionHandler {
+    return CoroutineExceptionHandler { _, throwable ->
+        val error = handleError(throwable)
+        toast(error.second)
+    }
 }
 
 

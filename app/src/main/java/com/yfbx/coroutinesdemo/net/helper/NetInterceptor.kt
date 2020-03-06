@@ -1,7 +1,6 @@
 package com.yfbx.coroutinesdemo.net.helper
 
 import com.yfbx.coroutinesdemo.BuildConfig
-import com.yfbx.coroutinesdemo.Prefs
 import okhttp3.*
 
 /**
@@ -52,8 +51,6 @@ class NetInterceptor : Interceptor {
      */
     private fun headers(): Headers {
         val headers = Headers.Builder()
-        headers.add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-        headers.add("XXX-YUXIAOR-TOKEN", Prefs.getToken())
         headers.add("User-Agent", userAgent())
         headers.add("Accept-Language", "zh-CN")
         return headers.build()

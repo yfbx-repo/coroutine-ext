@@ -1,4 +1,4 @@
-package com.yfbx.coroutinesdemo.global.ext
+package com.yfbx.coroutinesdemo.utils
 
 import android.content.res.Resources
 import android.util.TypedValue
@@ -9,20 +9,20 @@ import android.util.TypedValue
  * Description:
  */
 
-fun dp2px(dp: Float): Float {
+fun dp(dp: Float): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().displayMetrics)
 }
 
-fun dpInt(dp: Float): Int {
-    return dp2px(dp).toInt()
+fun dp(dp: Int): Int {
+    return dp(dp.toFloat()).toInt()
 }
 
-fun sp2px(sp: Float): Float {
+fun sp(sp: Float): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sp, Resources.getSystem().displayMetrics)
 }
 
-fun spInt(sp: Float): Int {
-    return sp2px(sp).toInt()
+fun sp(sp: Int): Int {
+    return sp(sp.toFloat()).toInt()
 }
 
 fun matchParent(): Int {

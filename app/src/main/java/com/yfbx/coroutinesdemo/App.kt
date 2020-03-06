@@ -1,4 +1,4 @@
-package com.yfbx.coroutinesdemo.global
+package com.yfbx.coroutinesdemo
 
 import android.app.Activity
 import android.app.Application

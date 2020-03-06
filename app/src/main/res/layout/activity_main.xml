@@ -15,31 +15,8 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:padding="10dp"
-        android:text="单个请求"
+        android:text="Test"
         android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="串行请求"
-        android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/btn3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="并行请求"
-        android:textColor="@android:color/white" />
-
 
     <TextView
         android:id="@+id/infoTxt"
