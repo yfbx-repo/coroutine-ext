@@ -40,6 +40,10 @@ val Net: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
+/**
+ *  lifecycleScope  在此范围内启动的协程会在 Lifecycle 被销毁时取消
+ */
 fun LifecycleOwner.network(block: suspend CoroutineScope.() -> Unit): Job {
     return lifecycleScope.launch(ErrorHandler(), CoroutineStart.DEFAULT, block)
 }
