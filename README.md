@@ -17,7 +17,7 @@ dependencies {
 
 #### How to use
 
- 1. **Define api with aeyword `suspend` and the return type is just what you want**
+ 1. **Define api with keyword `suspend` and the return type is just what you want**
 ```
 interface UserApi {
 
@@ -28,7 +28,7 @@ interface UserApi {
 }
 ```
 
- 2. **Use extion in subtype of `LifecycleOwner` or `CoroutineScope`**
+ 2. **Use extention in subtype of `LifecycleOwner` or `CoroutineScope`**
 
 ```
    /**
