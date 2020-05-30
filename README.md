@@ -1,5 +1,5 @@
 # Coroutine Extention
-[![](https://img.shields.io/badge/release-1.0.0-blue.svg)](https://github.com/yfbx/coroutine-ext/releases)     
+[![](https://img.shields.io/badge/release-1.0.0-blue.svg)](https://github.com/yfbx-repo/coroutine-ext/releases)     
 
 Coroutine Extention For Retrofit2
 
