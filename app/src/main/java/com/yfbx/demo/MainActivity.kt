@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         infoTxt.append("Response：${user}")
     }
 
-
+    /**
+     * network with loading
+     */
     private fun login2() {
         loading {
             val user = Net.create<UserApi>().login("18888888888", "123456")
