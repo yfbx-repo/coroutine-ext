@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".activity.MainActivity"
+    tools:context=".MainActivity"
     tools:ignore="All">
 
     <TextView
-        android:id="@+id/btn1"
+        android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

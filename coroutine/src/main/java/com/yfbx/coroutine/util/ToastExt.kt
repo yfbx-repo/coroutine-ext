@@ -1,8 +1,7 @@
-package com.yfbx.coroutinesdemo.utils
+package com.yfbx.coroutine.util
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import com.yfbx.coroutinesdemo.App
 
 /**
  * Author: Edward
@@ -15,13 +14,13 @@ private var toast: Toast? = null
 fun toast(message: CharSequence?, duration: Int = Toast.LENGTH_SHORT) {
     if (message == null) return
     toast?.cancel()
-    toast = Toast.makeText(App.app, message, duration)
+    toast = Toast.makeText(AppProvider.context, message, duration)
     toast?.show()
 }
 
 @SuppressLint("ShowToast")
 fun toast(message: Int, duration: Int = Toast.LENGTH_SHORT) {
     toast?.cancel()
-    toast = Toast.makeText(App.app, message, duration)
+    toast = Toast.makeText(AppProvider.context, message, duration)
     toast?.show()
 }

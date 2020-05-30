@@ -1,13 +1,12 @@
-package com.yfbx.coroutinesdemo.activity
+package com.yfbx.demo
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
-import com.yfbx.coroutinesdemo.R
-import com.yfbx.coroutinesdemo.api.LoginApi
-import com.yfbx.coroutinesdemo.net.Net
-import com.yfbx.coroutinesdemo.net.loading
-import com.yfbx.coroutinesdemo.net.onError
+import com.yfbx.coroutine.loading
+import com.yfbx.coroutine.onError
+import com.yfbx.demo.net.Net
+import com.yfbx.demo.net.UserApi
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.create
 
@@ -18,23 +17,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         infoTxt.movementMethod = ScrollingMovementMethod()
-        btn1.setOnClickListener { login() }
+        btn.setOnClickListener { login() }
     }
 
     private fun login() = loading {
-        val user = Net.create<LoginApi>().login("18888888888", "123123", "123123", 1)
-        infoTxt.append("单个请求：" + user.access_token)
+        val user = Net.create<UserApi>().login("18888888888", "123456")
+        //UI
+        infoTxt.append("Response：${user}")
     }
 
 
     private fun login2() {
         loading {
-            val user = Net.create<LoginApi>().login("18888888888", "123123", "123123", 1)
-            infoTxt.append("单个请求：" + user.access_token)
+            val user = Net.create<UserApi>().login("18888888888", "123456")
+            //UI
+            infoTxt.append("Response：${user}")
         }.onError { code, msg ->
-            println(msg)
+            //error
+            infoTxt.append("code：$code , message:$msg")
         }.invokeOnCompletion {
-            //
+            // on complete
         }
     }
 }

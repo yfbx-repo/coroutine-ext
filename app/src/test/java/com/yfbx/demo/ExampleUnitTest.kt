@@ -1,4 +1,4 @@
-package com.yfbx.coroutinesdemo
+package com.yfbx.demo
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
