@@ -2,7 +2,6 @@ package com.yfbx.demo
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import androidx.appcompat.app.AppCompatActivity
 import com.yfbx.coroutine.loading
 import com.yfbx.coroutine.network
 import com.yfbx.coroutine.onError
@@ -12,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.create
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
