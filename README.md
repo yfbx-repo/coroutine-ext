@@ -19,7 +19,7 @@ repositories {
 }
 ...
 dependencies {
-	implementation 'com.github.yfbx:coroutine-ext:1.0.0'
+	implementation 'com.github.yfbx:coroutine-ext:1.0.0-lifecycle'
 }
 ```
 
