@@ -1,7 +1,16 @@
 # Coroutine Extention
 [![](https://img.shields.io/badge/release-1.0.0-blue.svg)](https://github.com/yfbx-repo/coroutine-ext/releases)     
-[中文说明](README-CN.md)    
-Coroutine Extention For Retrofit2
+[中文说明](README-CN.md)
+
+### Coroutine Extention For Retrofit2
+branch master is based on:
+```
+ org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6
+```
+branch lifecycle is based on:
+```
+ androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha03
+```
 
 
 #### Add the dependency
@@ -9,9 +18,7 @@ Coroutine Extention For Retrofit2
 repositories {
 	maven { url 'https://jitpack.io' }
 }
-```
-
-```
+...
 dependencies {
 	implementation 'com.github.yfbx:coroutine-ext:1.0.0'
 }
@@ -30,28 +37,31 @@ interface UserApi {
 }
 ```
 
- 2. **Use extention in subtype of `LifecycleOwner` or `CoroutineScope`**
+ 2. **`BaseActivity` extends `CoroutineScope`**
+```
+abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+
+    //cancel coroutine task when destroyed
+    override fun onDestroy() {
+        cancel()
+        super.onDestroy()
+    }
+}
+```
+3. **Use extention in subtype of `CoroutineScope`**
 
 ```
-   /**
-    * network
-    */
+
    private fun login() = network {
         val user = Net.create<UserApi>().login("18888888888", "123456")
-        //UI
         infoTxt.append("Response：${user}")
     }
 
-   /**
-    * network with loading
-    */
    private fun login() {
         loading {
             val user = Net.create<UserApi>().login("18888888888", "123456")
-            //UI
             infoTxt.append("Response：${user}")
         }.onError { code, msg ->
-            //error
             infoTxt.append("code：$code , message:$msg")
         }
     }
