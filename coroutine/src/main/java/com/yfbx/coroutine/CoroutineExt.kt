@@ -3,11 +3,9 @@ package com.yfbx.coroutine
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.google.gson.Gson
 import com.yfbx.coroutine.util.Loading
 import com.yfbx.coroutine.util.toast
 import kotlinx.coroutines.*
-import retrofit2.HttpException
 
 /**
  * Author Edward
@@ -17,26 +15,6 @@ import retrofit2.HttpException
  */
 
 /**
- * CoroutineScope扩展
- * Google官方推荐写法 BaseActivity 继承 CoroutineScope by MainScope()
- * 在onDestroy 时调用 CoroutineScope 的 cancel方法取消协程任务
- */
-fun CoroutineScope.network(block: suspend CoroutineScope.() -> Unit): Job {
-    return launch(NetErrorHandler(), CoroutineStart.DEFAULT, block)
-}
-
-/**
- * CoroutineScope扩展
- */
-fun CoroutineScope.loading(showLoading: Boolean = true, block: suspend CoroutineScope.() -> Unit): Job {
-    val loading = if (showLoading) Loading.show() else null
-    val job = network(block)
-    job.invokeOnCompletion { loading?.dismiss() }
-    return job
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  *  使用 lifecycleScope 进行协程任务，自动处理生命周期
  *  当生命周期 onDestroy时，协程任务 会被 cancel
  */
@@ -45,8 +23,7 @@ fun LifecycleOwner.network(block: suspend CoroutineScope.() -> Unit): Job {
 }
 
 /**
- * 带 Loading
- * 使用 lifecycleScope 进行协程任务，自动处理生命周期
+ * 在FragmentActivity中 扩展带Loading的任务
  */
 fun FragmentActivity.loading(show: Boolean = true, block: suspend CoroutineScope.() -> Unit): Job {
     val loading = if (show) Loading.show() else null
@@ -62,26 +39,11 @@ fun FragmentActivity.loading(show: Boolean = true, block: suspend CoroutineScope
 fun Job.onError(onError: (code: Int, message: String) -> Unit): Job {
     invokeOnCompletion { throwable ->
         if (throwable != null) {
-            val error = getError(throwable)
-            onError.invoke(error.first, error.second)
+            val error = throwable.error
+            onError.invoke(error.code, error.msg)
         }
     }
     return this
-}
-
-/**
- * Retrofit2 网络请求 异常处理
- */
-private fun getError(throwable: Throwable): Pair<Int, String> {
-    return if (throwable is HttpException) {
-        val error = throwable.response()?.errorBody()?.string()
-        val map = Gson().fromJson(error, Map::class.java)
-        val errorCode = map["errorCode"] as Int
-        val errorMessage = map["message"] as String
-        errorCode to errorMessage
-    } else {
-        0 to (throwable.message ?: "请求出错，请稍后再试")
-    }
 }
 
 /**
@@ -90,5 +52,8 @@ private fun getError(throwable: Throwable): Pair<Int, String> {
 @Suppress("FunctionName")
 private fun NetErrorHandler(): CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     throwable.printStackTrace()
-    toast(getError(throwable).second)
+    toast(throwable.error.msg)
 }
+
+private val Throwable.error
+    get() = NetError(this)
