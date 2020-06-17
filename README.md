@@ -1,6 +1,5 @@
 # Coroutine Extention
 [![](https://img.shields.io/badge/release-1.0.0-blue.svg)](https://github.com/yfbx-repo/coroutine-ext/releases)
-[中文说明](README-CN.md)
 
 ### Coroutine Extention For Retrofit2
 branch master is based on:
