@@ -1,5 +1,6 @@
 package com.yfbx.demo.net
 
+import com.yfbx.demo.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,11 +10,15 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Date: 2020-05-30
  * Description:
  */
-private const val HOST = "http://www-dev.yuxiaor.com/api/v1/"
+private const val HOST = "http://xxx.com/"
 
 private val client = OkHttpClient.Builder()
         .addInterceptor(HeaderInterceptor())
-        .addInterceptor(LoggerInterceptor())
+        .apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(LoggerInterceptor())
+            }
+        }
         .build()
 
 val Net: Retrofit = Retrofit.Builder()
