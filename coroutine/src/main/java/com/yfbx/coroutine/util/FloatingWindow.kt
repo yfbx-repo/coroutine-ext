@@ -13,7 +13,7 @@ import kotlin.properties.Delegates
  * @Date: 2019-07-20
  * @Description:
  */
-open class FloatingWindow(val context: Context) : LayoutContainer {
+abstract class FloatingWindow(val context: Context) : LayoutContainer {
     override val containerView: View? by lazy { contentView }
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -49,12 +49,10 @@ open class FloatingWindow(val context: Context) : LayoutContainer {
         }
     }
 
-    open fun onCreate(context: Context) {
-
-    }
+    abstract fun onCreate(context: Context)
 
 
-    open fun setContentView(contentView: View) {
+    fun setContentView(contentView: View) {
         this.contentView = contentView
         contentView.isFocusable = true
         contentView.isFocusableInTouchMode = true
@@ -62,7 +60,7 @@ open class FloatingWindow(val context: Context) : LayoutContainer {
         contentView.setOnTouchListener(this::onTouch)
     }
 
-    open fun setContentView(@LayoutRes layoutRes: Int) {
+    fun setContentView(@LayoutRes layoutRes: Int) {
         setContentView(LayoutInflater.from(context).inflate(layoutRes, null, false))
     }
 
